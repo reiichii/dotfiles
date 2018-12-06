@@ -15,6 +15,9 @@ cp .gitignore_global /Users/$(whoami)
 echo 'install applications from Brewfile'
 brew bundle
 
+echo 'install sync-settings in Atom'
+apm install sync-settings
+
 cat << END
 
 **************************************************
