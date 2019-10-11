@@ -1,0 +1,32 @@
+# pyenv
+export AWS_PATH="/usr/local/aws/bin"
+export PYENV_ROOT="$HOME/.pyenv/shims"
+export GETTEXT="/usr/local/opt/gettext/bin"
+
+export PATH="$PYENV_ROOT:$AWS_PATH:$PATH:$GETTEXT"
+eval "$(pyenv init -)"
+
+#
+export GITLAB_API_TOKEN=""
+
+
+source /usr/local/etc/bash_completion.d/git-prompt.sh
+source /usr/local/etc/bash_completion.d/git-completion.bash
+GIT_PS1_SHOWDIRTYSTATE=true
+export PS1='\[\033[32m\]\u@\h\[\033[00m\]:\[\033[34m\]\w\[\033[31m\]$(__git_ps1)\[\033[00m\]\n\$ '
+
+#alias python=python3
+
+# ec2 cmd
+if type aws > /dev/null 2>&1; then
+    # aws profile select
+    alias ap='export AWS_DEFAULT_PROFILE=`cat ~/.aws/credentials | grep -e "\[\(.*\)\]" | sed -e "s/\[//g" | sed -e "s/\]//g" | sort | fzf`'
+    # aws ec2 ip list
+    alias ec2='aws ec2 describe-instances | jq -r ".Reservations[].Instances[] | select(.Tags!=null) | [.InstanceId, .PublicIpAddress, .PrivateIpAddress, [.Tags[] | select(.Key == \"Name\").Value][]] | @tsv " | sort -k3'
+    alias ec2desc='aws ec2 describe-instances | jq -r ".Reservations[].Instances[] | select(.InstanceId==\"i-017b9946a248a7679\")"'
+fi
+
+# aws completer
+complete -C '/usr/local/aws/bin/aws_completer' aws
+
+source ~/.bashrc
