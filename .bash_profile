@@ -1,15 +1,22 @@
-
-# The next line updates PATH for the Google Cloud SDK.
-if [ -f '/private/tmp/google-cloud-sdk/path.bash.inc' ]; then . '/private/tmp/google-cloud-sdk/path.bash.inc'; fi
-
-# The next line enables shell command completion for gcloud.
-if [ -f '/private/tmp/google-cloud-sdk/completion.bash.inc' ]; then . '/private/tmp/google-cloud-sdk/completion.bash.inc'; fi
-
-# rbenv用
-# eval "$(rbenv init -)"
-
-# git settings
+# export branch name
 source /usr/local/etc/bash_completion.d/git-prompt.sh
-source /usr/local/git/contrib/completion/git-completion.bash
+source /usr/local/etc/bash_completion.d/git-completion.bash
 GIT_PS1_SHOWDIRTYSTATE=true
-export PS1='\[\033[32m\]\u@\h\[\033[00m\]:\[\033[34m\]\w\[\033[31m\]$(__git_ps1)\[\033[00m\]\$ '
+export PS1='\[\033[32m\]\u@\h\[\033[00m\]:\[\033[34m\]\w\[\033[31m\]$(__git_ps1)\[\033[00m\]\n\$ '
+
+#pyenv
+export PYENV_ROOT="$HOME/.pyenv"
+export PATH="$PYENV_ROOT/bin:$PATH"
+eval "$(pyenv init -)"
+
+# ec2
+if type aws > /dev/null 2>&1; then
+    # aws profile select
+    alias ap='export AWS_DEFAULT_PROFILE=`cat ~/.aws/credentials | grep -e "\[\(.*\)\]" | sed -e "s/\[//g" | sed -e "s/\]//g" | sort | fzf`'
+    # aws ec2 ip list
+    alias ec2='aws ec2 describe-instances | jq -r ".Reservations[].Instances[] | select(.Tags!=null) | [.InstanceId, .PublicIpAddress, .PrivateIpAddress, [.Tags[] | select(.Key == \"Name\").Value][]] | @tsv " | sort -k3'
+    alias ec2desc='aws ec2 describe-instances | jq -r ".Reservations[].Instances[] | select(.InstanceId==\"i-017b9946a248a7679\")"'
+fi
+export PATH="/usr/local/opt/avr-gcc@8/bin:$PATH"
+
+source ~/.bashrc
