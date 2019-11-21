@@ -1,2 +1,4 @@
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash
 alias de='cd ~/Desktop'
-alias cop=!"git branch --all | tr -d '* ' | grep -v -e '->' | peco | sed -e 's+remotes/[^/]*/++g' | xargs git checkout"
+alias et='pet exec'
+alias es='pet search'
