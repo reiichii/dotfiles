@@ -1,3 +1,8 @@
+# pyenv ?家のに合わせるか
+export AWS_PATH="/usr/local/aws/bin"
+export PYENV_ROOT="$HOME/.pyenv/shims"
+export GETTEXT="/usr/local/opt/gettext/bin"
+
 # export branch name
 source /usr/local/etc/bash_completion.d/git-prompt.sh
 source /usr/local/etc/bash_completion.d/git-completion.bash
