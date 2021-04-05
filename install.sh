@@ -1,5 +1,4 @@
 #!/bin/bash
-# dotfilesのrootディレクトリから実行
 
 set -u
 
@@ -17,6 +16,9 @@ brew bundle
 
 echo 'install sync-settings in Atom'
 apm install sync-settings
+
+echo 'copy settings files'
+cp .tmux.conf ~/.tmux.conf
 
 cat << END
 

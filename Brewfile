@@ -6,7 +6,8 @@ brew 'pwgen'
 brew 'wget'
 brew 'git'
 brew 'tree'
-brew 'mas'
+brew 'tmux'
+brew 'reattach-to-user-namespace' # To share clipboard with tmux
 
 cask '1password'
 cask 'mysqlworkbench'
