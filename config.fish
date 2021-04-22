@@ -63,3 +63,7 @@ end
 
 function fish_right_prompt
 end
+
+function vscode
+  code ~/ghq/(ghq list | fzf)
+end
