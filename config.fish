@@ -4,12 +4,13 @@ alias fishconf='code ~/.config/fish'
 alias fishcp='cp ~/.config/fish/config.fish ~/Desktop/projects/dotfiles/'
 alias fishdp='cp ~/Desktop/projects/dotfiles/config.fish ~/.config/fish/config.fish'
 
-if type aws > /dev/null 2>&1
-    # aws profile select
-    alias ap='set -xg AWS_DEFAULT_PROFILE (cat ~/.aws/credentials | grep -e "\[\(.*\)\]" | sed -e "s/\[//g" | sed -e "s/\]//g" | sort | fzf)'
-    # aws ec2 ip list
-    alias ec2='aws ec2 describe-instances | jq -r ".Reservations[].Instances[] | select(.Tags!=null) | [.InstanceId, .PublicIpAddress, .PrivateIpAddress, [.Tags[] | select(.Key == \"Name\").Value][]] | @tsv " | sort -k3'
-end
+# pyenv
+pyenv init - | source
+set -x LDFLAGS "-L/usr/local/opt/bzip2/lib"
+set -x CPPFLAGS "-I/usr/local/opt/bzip2/include"
+
+# nodeenv
+nodenv init - | source
 
 function sandbox
   if string length -q $argv
