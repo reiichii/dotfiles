@@ -13,6 +13,7 @@ alias vscode='code ~/ghq/(ghq list | fzf --height 40% --reverse)'
 
 alias fishconf='code ~/.config/fish'
 alias fishcp='cp ~/.config/fish/config.fish ~/repo/private/dotfiles/'
+alias fishdp='cp ~/repo/private/dotfiles/config.fish ~/.config/fish/config.fish'
 
 # aws
 if type aws > /dev/null 2>&1
@@ -20,6 +21,17 @@ if type aws > /dev/null 2>&1
     alias ap='set -xg AWS_DEFAULT_PROFILE (cat ~/.aws/credentials | grep -e "\[\(.*\)\]" | sed -e "s/\[//g" | sed -e "s/\]//g" | sort | fzf)'
     # aws ec2 ip list
     alias ec2='aws ec2 describe-instances | jq -r ".Reservations[].Instances[] | select(.Tags!=null) | [.InstanceId, .PublicIpAddress, .PrivateIpAddress, [.Tags[] | select(.Key == \"Name\").Value][]] | @tsv " | sort -k3'
+end
+
+function sandbox
+  if string length -q $argv
+    set dirname $argv
+  else
+    set dirname (date "+%Y%m%d-%H%M")
+  end
+
+  ghq create $dirname
+  code /Users/a999-396/ghq/github.com/a999-396/$dirname
 end
 
 # oh-my-fish/theme-default
